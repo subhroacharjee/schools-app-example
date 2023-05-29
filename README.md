@@ -1,5 +1,5 @@
 # schools_app
-hello world
+
 My version to test gh action
 
 ## Getting Started

@@ -1,0 +1,26 @@
+{{- $domain := .Values.domain | required "A domain must be provided" -}}
+{{- $subdomains := concat .Values.subdomains (list .Release.Name) | compact -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{.Release.Name}}-webapp
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - kind: Rule
+      middlewares:
+        - name: schools-app-strip-middleware
+      services:
+        - name: {{ .Release.Name }}-webapp
+          port: webapp
+          scheme: http
+      match: >
+        {{ range $index, $alias := $subdomains -}} 
+        Host(`{{ $alias }}.{{ $domain }}`) 
+        {{- if ne (len $subdomains) (add1 $index) }} || 
+        {{ end -}}
+        {{- end }}

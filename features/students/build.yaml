@@ -1,0 +1,30 @@
+targets:
+  $default:
+    builders:
+      graphql_codegen:
+        options:
+          externalSchema: package:schema/src/tutero_graph.graphql
+          scalars:
+            Time:
+              type: DateTime
+              toJsonFunctionName: dateTimeToUtcToIso8601
+              import: package:schema/schema.dart
+            Duration:
+              type: Duration
+              toJsonFunctionName: durationToNanoseconds
+              fromJsonFunctionName: durationFromNanoseconds
+              import: package:schema/schema.dart
+            JSON:
+              type: Map<String, dynamic>
+            Map:
+              type: Map<String, dynamic>
+          clients:
+            - graphql
+          addTypename: true
+          includeIfNullOnInput: false
+          clientDirectives:
+            - cacheOnly
+            - cacheFirst
+            - cacheAndNetwork
+            - networkOnly
+            - noCache

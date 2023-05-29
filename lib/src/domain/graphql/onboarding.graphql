@@ -1,0 +1,65 @@
+query SearchSchools($query: String!, $regionId: String!) {
+  searchSchools(query: $query, regionID: $regionId) {
+    id
+    name
+  }
+}
+
+mutation CreateTeacher {
+  createTeacher {
+    createdUser: user {
+      id
+    }
+  }
+}
+
+mutation JoinClass($input: JoinClassInput!) {
+  joinClass(input: $input) {
+    id
+    name
+  }
+}
+
+mutation CreateSchoolStudent {
+  createSchoolStudent {
+    user {
+      id
+    }
+  }
+}
+
+query GetStudentClasses($studentId: ID!) {
+  getStudentClasses: student(id: $studentId) {
+    studentClasses: allClasses {
+      id
+    }
+  }
+}
+
+query GetStudentTeacherId($studentId: ID!) {
+  studentTeacherId: student(id: $studentId) {
+    studentClass: allClasses {
+      studentTeacher: teachers {
+        studentTeacherUser: user {
+          id
+        }
+      }
+    }
+  }
+}
+
+mutation DeleteSchool($id: ID!) {
+  deleteSchool(id: $id) {
+    id
+  }
+}
+
+query GetTeacherSchoolInfo {
+  schoolInfoTeacher: teacher {
+    schoolInfoSchool: school {
+      regionID
+      id
+      name
+    }
+  }
+}

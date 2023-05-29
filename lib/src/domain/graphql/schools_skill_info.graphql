@@ -1,0 +1,103 @@
+query GetClassSkillInfo(
+  $options: GetAllEdgeOptions
+  $skillId: ID!
+  $classId: ID!
+) {
+  getQuestionGroupsLinkedToSkill: skill(id: $skillId) {
+    allQuestionGroups(options: $options) {
+      id
+      allQuestions {
+        ...Question
+      }
+    }
+  }
+  skillInfoSkill: skill(id: $skillId) {
+    id
+    title
+  }
+}
+
+fragment Question on Question {
+  __typename
+  id
+  content
+  answers {
+    ...Answer
+  }
+  active
+  figure
+  calculator
+  hint
+  needsRefactoring
+  practiceQuestionAnswerForClass(id: $classId) {
+    id
+    content
+    isCorrect
+  }
+  ... on MultiQuestion {
+    id
+  }
+  ... on ShortQuestion {
+    id
+    decimals
+    exact
+    prefix
+    answerFormat
+    showHelper
+    suffix
+  }
+}
+
+fragment Answer on Answer {
+  id
+  content
+  isCorrect
+}
+
+mutation TagQuestionGroupForClass(
+  $classId: ID!
+  $questionGroupId: ID!
+  $tag: QuestionGroupTag!
+) {
+  tagQuestionGroupForClass(
+    id: $classId
+    questionGroupID: $questionGroupId
+    tag: $tag
+  ) {
+    questionGroupID
+    tag
+  }
+}
+
+mutation AnswerPracticeQuestionForClass(
+  $classId: ID!
+  $questionId: ID!
+  $answer: String!
+) {
+  answerPracticeQuestionForClass(
+    id: $classId
+    questionID: $questionId
+    answer: $answer
+  ) {
+    content
+    id
+    isCorrect
+  }
+}
+
+mutation ResetQuestionGroupForClass($classId: ID!, $questionGroupId: ID!) {
+  resetQuestionGroupForClass(id: $classId, questionGroupID: $questionGroupId)
+}
+
+mutation ResetPracticeQuestionForClass($classId: ID!, $questionId: ID!) {
+  resetPracticeQuestionForClass(id: $classId, questionID: $questionId)
+}
+
+query GetQuestionGroupTagsForClass($classId: ID!, $skillId: ID!) {
+  skill(id: $skillId) {
+    getQuestionGroupTagsForClass(id: $classId) {
+      questionGroupID
+      tag
+    }
+  }
+}

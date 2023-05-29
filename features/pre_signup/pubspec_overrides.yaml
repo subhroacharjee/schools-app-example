@@ -1,0 +1,22 @@
+dependency_overrides:
+  # components:
+  #   git: 
+  #     url: https://github.com/MathGaps/components.git
+  #     ref: flutter-design-systems
+  accounts_library:
+    path: ../../../accounts-library
+  skill_info:
+    path: ../../../learning-library/features/skill_info
+  components:
+    path: ../../../components
+  schema:
+    path: ../../../schema
+  core_flutter:
+    path: ../../../core-flutter
+  learn:
+    path: ../../../learning-library/features/learn
+  testing:
+    path: ../../../learning-library/features/testing
+  firebase_auth: 4.2.1
+  firebase_core: 2.4.0
+  firebase_core_web: 2.2.1

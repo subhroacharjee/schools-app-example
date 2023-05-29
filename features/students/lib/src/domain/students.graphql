@@ -1,0 +1,53 @@
+fragment Progress on Progress {
+  correct
+  wrong
+}
+
+query ComprehensionForTopic($classId: ID!, $topicId: ID!) {
+  topic(id: $topicId) {
+    topicProgress: progressForClass(id: $classId) {
+      topicUsersProgress: usersProgress {
+        progress {
+          ...Progress
+        }
+        userID
+      }
+    }
+  }
+}
+
+query ComprehensionForSubtopic($classId: ID!, $subtopicId: ID!) {
+  subtopic(id: $subtopicId) {
+    progressForClass(id: $classId) {
+      subtopicUsersProgress: usersProgress {
+        progress {
+          ...Progress
+        }
+        userID
+      }
+    }
+  }
+}
+
+query Comprehension($classId: ID!) {
+  class(id: $classId) {
+    overallComprehension: comprehension {
+      overall {
+        ...Progress
+      }
+      students {
+        studentsComprehension: comprehension {
+          ...Progress
+        }
+        studentID
+      }
+    }
+  }
+}
+
+query ClassCode($classId: ID!) {
+  classWithCode: class(id: $classId) {
+    id
+    code
+  }
+}

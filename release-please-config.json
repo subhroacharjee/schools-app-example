@@ -1,0 +1,17 @@
+{
+  "separate-pull-requests": true,
+  "packages": {
+    ".": {
+      "changelog-path": "CHANGELOG.md",
+      "release-type": "dart",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "extra-files": ["pubspec.yaml"],
+      "draft": false,
+      "prerelease": false,
+      "include-component-in-tag": false,
+      "component": ""
+    }
+  },
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-webapp
+  {{- template "reloader-annotations" }}
+  labels:
+    app: {{ .Release.Name }}-webapp
+spec:
+  replicas: {{ default 1 .Values.webapp.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-webapp
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-webapp
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-webapp
+          image: '{{ required "An image repository must be provided" .Values.webapp.image.repository }}:{{ default .Chart.AppVersion .Values.webapp.image.tag }}'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: CONFIG_FILE
+              value: /usr/config/config.yml
+            - name: POD_VERSION
+              value: "{{ .Values.webapp.image.tag }}"
+            - name: DART_ENV
+              value: {{ required "An environment must be provided" .Values.env }}
+            {{- range (include "deployment-env" . | fromYaml) }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          volumeMounts:
+            - name: {{ .Release.Name }}-config
+              mountPath: /usr/config/config.yml
+              subPath: config.yml
+              readOnly: true
+      volumes:
+        - name: {{ .Release.Name }}-config
+          configMap:
+            name: {{ .Release.Name }}-config

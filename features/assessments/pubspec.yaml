@@ -1,0 +1,78 @@
+name: assessments
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  schools_app:
+    path: ../../.
+  core:
+    git:
+      url: https://github.com/MathGaps/legacy-frontend.git
+      path: packages/core
+  core_dart:
+    git:
+      url: https://github.com/MathGaps/core-dart.git
+  core_flutter:
+    git:
+      url: https://github.com/MathGaps/core-flutter.git
+      ref: v1.10.x
+  schema:
+    git: 
+      url: https://github.com/MathGaps/schema.git
+      ref: v1.x
+  components:
+    git:
+      url: https://github.com/MathGaps/components.git
+  learning_library:
+    git: 
+      url: https://github.com/MathGaps/learning-library.git
+      ref: v1.16.x
+  flutter_bloc: 8.1.1
+  flutter_svg: 1.0.0
+  google_fonts: 2.3.3
+  dartx: ^1.0.0
+  injectable: 1.5.3
+  time_picker_widget: ^1.0.0+10
+  recase: ^4.0.0
+  intl: ^0.17.0
+  flutter:
+    sdk: flutter
+  equatable: 2.0.5
+  duration: ^3.0.12
+
+dev_dependencies:
+  build_runner: 2.2.0
+  graphql_codegen:
+    git:
+      url: https://github.com/MathGaps/graphql_codegen.git
+      path: packages/graphql_codegen
+      ref: package-scopes
+  graphql_codegen_sanitizer:
+    git: https://github.com/MathGaps/graphql_codegen_sanitizer.git
+  injectable_generator: 1.5.4
+  flutter_lints: 2.0.0
+  copy_with_extension_gen: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - packages/assessments/assets/pause_icon.svg
+    - packages/assessments/assets/play_icon.svg
+    - packages/assessments/assets/stop_icon.svg
+    - packages/assessments/assets/calendar_icon.svg
+    - packages/assessments/assets/edit_icon.svg
+    - packages/assessments/assets/remove_icon.svg
+    - packages/assessments/assets/logo_mono.png
+    - packages/assessments/assets/diagnostic_assessment.png
+    - packages/assessments/assets/review_assessment.png
+    - packages/assessments/assets/rocket.png
+    - packages/assessments/assets/pause_emoji.png
+    - packages/assessments/assets/empty_assessments.png
+    - packages/assessments/assets/no_assessment.svg
+
+graphql_codegen_sanitizer:
+  schema_file: package:schema/src/tutero_graph.graphql.dart

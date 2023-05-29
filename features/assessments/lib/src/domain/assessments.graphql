@@ -1,0 +1,225 @@
+fragment Assessment on DiagnosticTestSession {
+  tests {
+    complete
+    student: user {
+      id
+    }
+    startedAt
+  }
+  duration
+  startAt
+  startedAt
+  dueAt
+  expectedDueAt
+  subtopics {
+    id
+    title
+    icon
+  }
+  assessmentTopic: topic {
+    id
+    title
+  }
+  id
+  name
+  status
+  timeSaved
+  allSubtopics
+  timeTaken
+}
+
+fragment DiagnosticTestSessionCounts on DiagnosticTestSessionCounts {
+  active
+  past
+  upcoming
+}
+
+query AllAssessments(
+  $interval: DiagnosticTestSessionInterval!
+  $classId: ID!
+) {
+  allSessionsClass: class(id: $classId) {
+    allAsssessmentsForClass: allDiagnosticTestSessions(interval: $interval) {
+      ...Assessment
+    }
+  }
+}
+
+query GetAssessmentUpdates($diagnosticTestSessionId: ID!) {
+  assessmentUpdates: diagnosticTestSession(id: $diagnosticTestSessionId) {
+    id
+    statsTests: tests {
+      id
+      startedAt
+      statsUser: user {
+        id
+      }
+    }
+    expectedDueAt
+  }
+}
+
+query AllAssessmentsLinkedToTopic(
+  $classId: ID!
+  $topicId: ID!
+  $interval: DiagnosticTestSessionInterval!
+) {
+  targetTopic: topic(id: $topicId) {
+    allAssessmentsForTopic: allDiagnosticTestSessions(
+      classID: $classId
+      interval: $interval
+    ) {
+      ...Assessment
+    }
+  }
+}
+
+query AllAssessmentsLinkedToSubtopic($classId: ID!, $interval: DiagnosticTestSessionInterval!, $subtopicId: ID!) {
+  targetSubtopic: subtopic(id: $subtopicId) {
+    allAssessmentsForSubtopic: allDiagnosticTestSessions(classID: $classId, interval: $interval) {
+      ...Assessment
+    }
+  }
+}
+
+query DiagnosticTestSessionCounts($classId: ID!) {
+  classCounts: class(id: $classId) {
+    diagnosticTestSessionCounts {
+      ...DiagnosticTestSessionCounts
+    }
+  }
+}
+
+query DiagnosticTestSessionCountsForTopic($classId: ID!, $topicId: ID!) {
+  countTopic: topic(id: $topicId) {
+    diagnosticTestSessionCounts(classID: $classId) {
+      ...DiagnosticTestSessionCounts
+    }
+  }
+}
+
+query DiagnosticTestSessionCountsForSubtopic($classId: ID!, $subtopicId: ID!) {
+  countSubtopic: subtopic(id: $subtopicId) {
+    diagnosticTestSessionCounts(classID: $classId) {
+      ...DiagnosticTestSessionCounts
+    }
+  }
+}
+
+mutation CreateDiagnosticTestSession(
+  $classId: ID!
+  $input: CreateDiagnosticTestSessionInput!
+) {
+  createDiagnosticTestSession(classID: $classId, input: $input) {
+    id
+  }
+}
+
+mutation UpdateDiagnosticTestSession(
+  $sessionId: ID!
+  $input: UpdateDiagnosticTestSessionInput!
+) {
+  updateDiagnosticTestSession(id: $sessionId, input: $input) {
+    id
+  }
+}
+
+mutation StartDiagnosticTestSession($testId: ID!) {
+  startDiagnosticTestSession(id: $testId) {
+    id
+  }
+}
+
+mutation PauseDiagnosticTestSession($testId: ID!) {
+  pauseDiagnosticTestSession(id: $testId) {
+    id
+  }
+}
+
+mutation ResumeDiagnosticTestSession($testId: ID!) {
+  resumeDiagnosticTestSession(id: $testId) {
+    id
+	expectedDueAt
+  }
+}
+
+mutation FinishDiagnosticTestSession($testId: ID!) {
+  finishDiagnosticTestSession(id: $testId) {
+    id
+    initialProgress {
+      wrong
+      correct
+    }
+    finalProgress {
+      wrong
+      correct
+    }
+    timeSaved
+    finishedAssessmentTopic: topic {
+      id
+      title
+      emoji
+    }
+  }
+}
+
+mutation RemoveDiagnosticTestSession($testId: ID!) {
+  removeDiagnosticTestSession(id: $testId) {
+    id
+  }
+}
+
+fragment Topic on Topic {
+  id
+  title
+  emoji
+  color
+}
+
+fragment Subtopic on Subtopic {
+  id
+  title
+  icon
+}
+
+query GetTopicsForClass($classId: ID!) {
+  class(id: $classId) {
+    topicsForClass {
+      ...Topic
+    }
+  }
+}
+
+query GetSubtopicsForClass($classId: ID!, $topicId: ID!) {
+  topicForClass: topic(id: $topicId) {
+    classSubtopics: subtopicsForClass(id: $classId) {
+      ...Subtopic
+    }
+  }
+}
+
+query DiagnosticTestSessionState($diagnosticTestSessionId: ID!) {
+  assessmentState: diagnosticTestSession(id: $diagnosticTestSessionId) {
+    status
+  }
+}
+
+query GetFinishedDiagnosticTestSession($diagnosticTestSessionId: ID!) {
+  finishedSession: diagnosticTestSession(id: $diagnosticTestSessionId) {
+    id
+    timeSaved
+    finishedSessionTopic: topic {
+      id
+      title
+      emoji
+    }
+    finishedSessionInitialProgress: initialProgress {
+      correct
+      wrong
+    }
+    finishedSessionFinalProgress: finalProgress {
+      correct
+      wrong
+    }
+  }
+}

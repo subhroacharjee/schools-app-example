@@ -1,0 +1,103 @@
+fragment Year on Year {
+  id
+  title
+}
+
+query GetTopicsForYear($yearId: ID!) @cacheFirst {
+  allTopic: year(id: $yearId) {
+    id
+    topics {
+      id
+      color
+      title
+      emoji
+    }
+  }
+}
+
+query GetTopicYears($topicId: ID!) @cacheFirst {
+  tTopic: topic(id: $topicId) {
+    id
+    years {
+      ...Year
+    }
+  }
+}
+
+query GetSubtopicsForYear($yearId: ID!, $topicId: ID!) @cacheFirst {
+  sTopic: topic(id: $topicId) {
+    id
+    color
+    subtopicsForYear(yearID: $yearId) {
+      id
+      title
+      icon
+      totalSkills
+      years {
+        ...Year
+      }
+    }
+  }
+}
+
+query GetSubtopicYear($subtopicId: ID!) @cacheFirst {
+  yearSubtopic: subtopic(id: $subtopicId) {
+    id
+    years {
+      ...Year
+    }
+  }
+}
+
+query SkillsForYear($yearId: ID!, $topicId: ID!, $subtopicId: ID!) @cacheFirst {
+  skSubtopic: subtopic(id: $subtopicId) {
+    id
+    skillsForYear(yearID: $yearId) {
+      id
+      title
+      headerTextForYear(
+        yearID: $yearId
+        topicID: $topicId
+        subtopicID: $subtopicId
+      )
+      years {
+        ...Year
+      }
+    }
+  }
+  yearTopic: topic(id: $topicId) {
+    id
+    color
+  }
+}
+
+query AllYears @cacheFirst {
+  allYears {
+    ...Year
+  }
+}
+
+query GetTopic($topicId: ID!) @cacheFirst {
+  topic(id: $topicId) {
+    id
+    emoji
+    color
+    title
+  }
+}
+
+query GetSubtopic($subtopicId: ID!, $topicId: ID!) @cacheFirst {
+  subtopic(id: $subtopicId) {
+    id
+    icon
+    title
+    totalSkills
+    years {
+      ...Year
+    }
+  }
+  skillTopic: topic(id: $topicId) {
+    id
+    color
+  }
+}

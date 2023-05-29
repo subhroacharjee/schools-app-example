@@ -1,0 +1,25 @@
+dependency_overrides:
+  # accounts_library:
+  #   path: ../accounts-library
+  # components:
+  #   path: ../components
+  # core:
+  #   path: ../legacy-frontend/packages/core
+  # learn:
+  #   path: ../learning-library/features/learn
+  # skill_info:
+  #   path: ../learning-library/features/skill_info
+  # testing:
+  #   path: ../learning-library/features/testing
+  # learning_library:
+  #   path: ../learning-library
+  # core_flutter:
+  #   path: ../core-flutter
+  # schema:
+  #   path: ../schema
+  cloud_firestore: 4.2.0
+  firebase_auth: 4.2.1
+  firebase_core: 2.4.0
+  firebase_core_web: 2.2.1
+  firebase_auth_web: 5.2.3
+  cloud_firestore_platform_interface: 5.10.0

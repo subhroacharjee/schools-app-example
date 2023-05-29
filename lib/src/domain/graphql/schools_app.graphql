@@ -1,0 +1,165 @@
+query GetClassNameAndYear($classId: ID!) {
+  classNameAndYear: class(id: $classId) {
+    name
+    nYear: year {
+      id
+    }
+  }
+}
+
+query GetClassName($classId: ID!) {
+  className: class(id: $classId) {
+    name
+  }
+}
+
+mutation UpdateClass($updateClassId: ID!, $input: UpdateClassInput!) {
+  updateClass(id: $updateClassId, input: $input) {
+    name
+    cYear: year {
+      id
+    }
+  }
+}
+
+query GetYearTitles($options: GetAllOptions) @cacheFirst {
+  allYears(options: $options) {
+    id
+    title
+  }
+}
+
+query GetClassStudentSettings($classId: ID!) {
+  classStudentSettings: class(id: $classId) {
+    code
+    students {
+      settingsUser: user {
+        id
+      }
+    }
+  }
+}
+
+mutation RemoveStudentFromClass($classId: ID!, $studentId: ID!) {
+  removeStudentFromClass(classID: $classId, studentID: $studentId) {
+    id
+    name
+    year {
+      title
+    }
+  }
+}
+
+mutation DeleteClass($deleteClassId: ID!) {
+  deleteClass(id: $deleteClassId)
+}
+
+query GetRegions($options: GetAllOptions) @cacheFirst {
+  allRegions(options: $options) {
+    id
+    title
+    defaultTimeZone
+  }
+}
+
+mutation CreateSchool($input: CreateSchoolInput!) {
+  createSchool(input: $input) {
+    id
+    name
+    regionID
+  }
+}
+
+mutation AddClass($input: AddClassInput!) {
+  addClass(input: $input) {
+    id
+  }
+}
+
+query GetClasses {
+  getClassesTeacher: teacher {
+    getClassesSchool: school {
+      teacherClasses: allClasses {
+        id
+        name
+        code
+        teacherStudents: students {
+          teacherStudentsUser: user {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+
+query GetNewClass($classId: ID!) {
+  newClass: class(id: $classId) {
+    id
+    name
+    code
+    newClassStudents: students {
+      newClassUser: user {
+        id
+      }
+    }
+  }
+}
+
+query GetClassItemInfo($classId: ID!) {
+  updatedClass: class(id: $classId) {
+    id
+    name
+    code
+  }
+}
+
+query GetUserRoles @cacheFirst {
+  userRoles: user {
+    id
+    roles
+  }
+}
+
+query GetStudents($classId: ID!) {
+  class(id: $classId) {
+    classStudents: students {
+      classUser: user {
+        id
+      }
+    }
+  }
+}
+
+query GetUpcomingAssessments($studentId: ID!) {
+  student(id: $studentId) {
+    upcomingTests {
+      id
+      session {
+        id
+        startAt
+        duration
+        name
+      }
+    }
+  }
+}
+
+mutation StartStudentAssessment($testId: ID!) {
+  startExistingTest(testID: $testId) {
+    id
+    paused
+    startedAt
+  }
+}
+
+query GetActiveTestForStudent($studentId: ID!) {
+  activeTestStudent: student(id: $studentId) {
+    activeTest {
+      id
+      activeTestSession: session {
+        status
+      }
+    }
+  }
+}

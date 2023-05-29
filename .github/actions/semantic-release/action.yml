@@ -1,0 +1,31 @@
+name: Semantic Release
+description: >
+  Automates the whole package release workflow including: determining the next version number, 
+  generating the release notes, and publishing the package.
+inputs:
+  github-token:
+    required: true
+    description: "The Github token for publishing a release"
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "lts/*"
+    - name: Cache dependencies
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: ./node_modules
+        key: modules-${{ hashFiles('package-lock.json') }}
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm ci --ignore-scripts
+      shell: bash
+    - id: semantic-release
+      name: Semantic release
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      shell: bash
+      run: npx semantic-release

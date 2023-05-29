@@ -1,0 +1,369 @@
+fragment Progress on Progress {
+  correct
+  wrong
+}
+
+fragment Years on Year {
+  id
+  title
+}
+
+# TODO: When graphql-flutter 5.2.0 is out, use this so that the two ff queries can be merged
+# query GetTopicsForClass($classId: ID!, $forStudent: Boolean!) @cacheFirst {
+#   topicsClass: class(id: $classId) {
+#     id
+#     topicsForClass {
+#       id
+#       title
+#       color
+#       emoji
+#       progress @include(if: $forStudent) {
+#         ...Progress
+#       }
+#       progressForClass(id: $classId) @skip(if: $forStudent) {
+#         ...Progress
+#       }
+#     }
+#   }
+# }
+
+query GetTopicsForClass($classId: ID!) @cacheFirst {
+  topicsClass: class(id: $classId) {
+    id
+    topicsForClass {
+      id
+      title
+      color
+      emoji
+      topicsProgressForClass: progressForClass(id: $classId) {
+        progress {
+          ...Progress
+        }
+      }
+    }
+  }
+}
+
+query GetTopicsForClassStudent($classId: ID!) @cacheFirst {
+  topicsStudent: class(id: $classId) {
+    id
+    topicsForStudent: topicsForClass {
+      id
+      title
+      color
+      emoji
+      progress {
+        ...Progress
+      }
+    }
+  }
+}
+
+# TODO: When graphql-flutter 5.2.0 is out, use this so that the two ff queries can be merged
+# query GetSubtopicsForClass($classId: ID!, $topicId: ID!, $forStudent: Boolean!)
+# @cacheFirst {
+#   topicForClass: topic(id: $topicId) {
+#     id
+#     color
+#     title
+#     classSubtopics: subtopicsForClass(id: $classId) {
+#       id
+#       progress @include(if: $forStudent) {
+#         ...Progress
+#       }
+#       progressForClass(id: $classId) @skip(if: $forStudent) {
+#         ...Progress
+#       }
+#       title
+#       stateForClass(id: $classId)
+#       icon
+#       flaggedSkillsForClass(id: $classId)
+#       taughtSkillsForClass(id: $classId)
+#       totalSkillsForClass(id: $classId)
+#       years {
+#		...Years
+#       }
+#     }
+#   }
+# }
+
+query GetSubtopicsForClass($classId: ID!, $topicId: ID!) @cacheFirst {
+  topicForClass: topic(id: $topicId) {
+    id
+    color
+    title
+    classSubtopics: subtopicsForClass(id: $classId) {
+      id
+      subtopicsProgressForClass: progressForClass(id: $classId) {
+        progress {
+          ...Progress
+        }
+      }
+      title
+      stateForClass(id: $classId)
+      icon
+      flaggedSkillsForClass(id: $classId)
+      taughtSkillsForClass(id: $classId)
+      totalSkillsForClass(id: $classId)
+      years {
+        ...Years
+      }
+    }
+  }
+}
+
+query GetSubtopicsForClassStudent($classId: ID!, $topicId: ID!) @cacheFirst {
+  topicForStudent: topic(id: $topicId) {
+    id
+    color
+    title
+    studentSubtopics: subtopicsForClass(id: $classId) {
+      id
+      progress {
+        ...Progress
+      }
+      title
+      stateForClass(id: $classId)
+      icon
+      flaggedSkillsForClass(id: $classId)
+      taughtSkillsForClass(id: $classId)
+      totalSkillsForClass(id: $classId)
+      years {
+        ...Years
+      }
+    }
+  }
+}
+
+# TODO: When graphql-flutter 5.2.0 is out, use this so that the two ff queries can be merged
+# query GetSkillsForClass(
+#   $classId: ID!
+#   $subtopicId: ID!
+#   $topicId: ID!
+#   $forStudent: Boolean!
+# ) @cacheFirst {
+#   subtopicForClass: subtopic(id: $subtopicId) {
+#     id
+#     classSkills: skillsForClass(id: $classId) {
+#       id
+#       progress @include(if: $forStudent) {
+#         ...Progress
+#       }
+#       progressForClass(id: $classId) @skip(if: $forStudent) {
+#         ...Progress
+#       }
+#       flaggedForClass(id: $classId)
+#       taughtForClass(id: $classId)
+#       title
+#       headerTextForClass(
+#         id: $classId
+#         topicID: $topicId
+#         subtopicID: $subtopicId
+#       )
+#     }
+#   }
+#   classTopic: topic(id: $topicId) {
+#     id
+#     color
+#   }
+# }
+
+query GetSkillsForClass($classId: ID!, $subtopicId: ID!, $topicId: ID!)
+@cacheFirst {
+  subtopicForClass: subtopic(id: $subtopicId) {
+    id
+    classSkills: skillsForClass(id: $classId) {
+      id
+      skillsProgressForClass: progressForClass(id: $classId) {
+        progress {
+          ...Progress
+        }
+      }
+      flaggedForClass(id: $classId)
+      taughtForClass(id: $classId)
+      title
+      headerTextForClass(
+        id: $classId
+        topicID: $topicId
+        subtopicID: $subtopicId
+      )
+    }
+  }
+  classTopic: topic(id: $topicId) {
+    id
+    color
+  }
+}
+
+query GetSkillsForClassStudent($classId: ID!, $subtopicId: ID!, $topicId: ID!)
+@cacheFirst {
+  subtopicForStudent: subtopic(id: $subtopicId) {
+    id
+    studentSkills: skillsForClass(id: $classId) {
+      id
+      progress {
+        ...Progress
+      }
+      flaggedForClass(id: $classId)
+      taughtForClass(id: $classId)
+      title
+      headerTextForStudent: headerTextForClass(
+        id: $classId
+        topicID: $topicId
+        subtopicID: $subtopicId
+      )
+    }
+  }
+  studentTopic: topic(id: $topicId) {
+    id
+    color
+  }
+}
+
+query GetSubtopicsIconAndTitleForClass($classId: ID!, $topicId: ID!)
+@cacheFirst {
+  mTopic: topic(id: $topicId) {
+    id
+    mSubtopics: subtopicsForClass(id: $classId) {
+      id
+      title
+      icon
+    }
+  }
+}
+
+query GetSubtopicsForStudent($topicId: ID!) @cacheFirst {
+  getSubtopicForStudent: topic(id: $topicId) {
+    id
+    title
+    color
+    subtopicsForUser {
+      id
+      progress {
+        ...Progress
+      }
+      title
+      icon
+      state
+    }
+  }
+}
+
+query GetTopic($topicId: ID!) @cacheFirst {
+  topic(id: $topicId) {
+    id
+    emoji
+    color
+    title
+  }
+}
+
+query GetTopicProgress($topicId: ID!) @cacheFirst {
+  topicProgress: topic(id: $topicId) {
+    id
+    progress {
+      ...Progress
+    }
+  }
+}
+
+query GetTopicProgressForClass($topicId: ID!, $classId: ID!) @cacheFirst {
+  topicProgressForClassQuery: topic(id: $topicId) {
+    id
+    topicProgressForClass: progressForClass(id: $classId) {
+      progress {
+        ...Progress
+      }
+    }
+  }
+}
+
+query GetSubtopic($subtopicId: ID!, $topicId: ID!) @cacheFirst {
+  subtopic(id: $subtopicId) {
+    id
+    icon
+    title
+  }
+  skillTopic: topic(id: $topicId) {
+    id
+    color
+  }
+}
+
+query GetSubtopicState($subtopicId: ID!) @cacheFirst {
+  subtopicStateResult: subtopic(id: $subtopicId) {
+    id
+    state
+  }
+}
+
+query GetSubtopicStateForClass($subtopicId: ID!, $stateForClassId: ID!)
+@cacheFirst {
+  subtopicStateForClass: subtopic(id: $subtopicId) {
+    id
+    stateForClass(id: $stateForClassId)
+  }
+}
+
+query GetSubtopicProgress($subtopicId: ID!) @cacheFirst {
+  subtopicProgress: subtopic(id: $subtopicId) {
+    id
+    progress {
+      ...Progress
+    }
+  }
+}
+
+query GetSubtopicProgressForClass($subtopicId: ID!, $classId: ID!) @cacheFirst {
+  subtopicProgressForClassQuery: subtopic(id: $subtopicId) {
+    id
+    subtopicProgressForClass: progressForClass(id: $classId) {
+      progress {
+        ...Progress
+      }
+    }
+  }
+}
+
+mutation TeachSkillForClass($classId: ID!, $skillId: ID!) @networkOnly {
+  teachSkillForClass(id: $classId, skillID: $skillId) {
+    id
+    taughtForClass(id: $classId)
+  }
+}
+
+mutation UnteachSkillForClass($classId: ID!, $skillId: ID!) @networkOnly {
+  unteachSkillForClass(id: $classId, skillID: $skillId) {
+    id
+    taughtForClass(id: $classId)
+  }
+}
+
+mutation FlagSkillForClass($classId: ID!, $skillId: ID!) @networkOnly {
+  flagSkillForClass(id: $classId, skillID: $skillId) {
+    id
+    flaggedForClass(id: $classId)
+  }
+}
+
+mutation UnflagSkillForClass($classId: ID!, $skillId: ID!) @networkOnly {
+  unflagSkillForClass(id: $classId, skillID: $skillId) {
+    id
+    flaggedForClass(id: $classId)
+  }
+}
+
+mutation SetSubtopicStateForClass(
+  $classId: ID!
+  $subtopicId: ID!
+  $state: SubtopicState!
+) @networkOnly {
+  setSubtopicStateForClass(
+    id: $classId
+    subtopicID: $subtopicId
+    state: $state
+  ) {
+    id
+    stateForClass(id: $classId)
+  }
+}

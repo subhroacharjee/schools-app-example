@@ -1,0 +1,56 @@
+name: Publish to Google Artifact Registry
+description: >
+  Builds the Dockerfile and publishes it to GAR.
+inputs:
+  repository:
+    required: true
+    description: The repository URL to push to
+  nextVersion:
+    required: true
+    description: The version of the image to deploy.
+  workload-identity-provider:
+    required: true
+    description: >
+      Name of the workload identity provider that is authorized to issue GAR 
+      writer service accounts.
+  gar-writer-sa:
+    required: true
+    description: >
+      Email of the service account authorized to write to GAR.
+  dockerfile:
+    required: false
+    default: "Dockerfile"
+    description: "The dockerfile to build"
+  personal-access-token:
+    required: false
+    default: ""
+    description: "Token to authenticate with GitHub"
+  context:
+    required: false
+    default: .
+    description: Context of the docker build
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - id: "auth"
+      uses: "google-github-actions/auth@v1"
+      with:
+        credentials_json: ${{ inputs.gar-writer-sa }}
+        token_format: "access_token"
+    - uses: "docker/login-action@v2"
+      with:
+        registry: "aisa-south1-docker.pkg.dev"
+        username: "oauth2accesstoken"
+        password: "${{ steps.auth.outputs.access_token }}"
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: ${{ inputs.context }}
+        file: ${{ inputs.dockerfile }}
+        push: true
+        build-args: |
+          TOKEN=${{ inputs.personal-access-token }}
+        tags: |
+          ${{ inputs.repository }}:${{ inputs.nextVersion }}

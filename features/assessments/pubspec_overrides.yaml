@@ -1,0 +1,14 @@
+dependency_overrides:
+  components:
+    path: ../../../components
+  schema:
+    path: ../../../schema
+  core:
+    path: ../../../legacy-frontend/packages/core
+  core_flutter:
+    path: ../../../core-flutter
+  learning_library:
+    path: ../../../learning-library
+  firebase_auth: 4.2.1
+  firebase_core: 2.4.0
+  firebase_core_web: 2.2.1

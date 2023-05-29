@@ -1,0 +1,9 @@
+services:
+  schools-app-webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DART_ENV: dev
+    ports:
+      - 80:80

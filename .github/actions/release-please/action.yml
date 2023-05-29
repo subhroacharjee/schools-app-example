@@ -1,0 +1,19 @@
+name: Release Please
+description: >
+  Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects.
+inputs:
+  github-token:
+    required: true
+    description: GitHub token for creating the release PR
+  default-branch:
+    required: false
+    description: Branch to open pull release PR against (detected by default)
+runs:
+  using: composite
+  steps:
+    - id: release
+      uses: google-github-actions/release-please-action@v3
+      with:
+        token: ${{ inputs.github-token }}
+        command: manifest
+        default-branch: ${{ inputs.default-branch }}

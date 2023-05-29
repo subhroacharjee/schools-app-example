@@ -1,0 +1,227 @@
+---
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    - dart_code_metrics
+  exclude:
+    # generated
+    - '**/generated_plugin_registrant.dart'
+    - '**/router.gr.dart'
+    - '**/*.config.dart'
+    - '**/*.pearl_config.dart'
+    - '**/*.g.dart'
+    - '**/*.model.dart'
+    - '**/*.gen.dart'
+    - '**/*.mocks.dart'
+    - '**/*.graphql.dart'
+    - '**/*.sanitized.dart'
+    - '**/*.datasource.dart'
+    - '**/*.repository.dart'
+    # built
+    - '**/android'
+    - '**/ios'
+    - '**/build'
+    - '**/assets'
+    - '**/fonts'
+    - '**/node_modules'
+    # misc
+    - '**/__brick__'
+
+linter:
+  rules:
+    # Error Rules
+    avoid_dynamic_calls: true
+    avoid_empty_else: true
+    avoid_print: true
+    avoid_relative_lib_imports: true
+    avoid_slow_async_io: true # use synchronous analogues
+    avoid_type_to_string: true # compiler will minify release-mode type symbols
+    avoid_types_as_parameter_names: true
+    avoid_web_libraries_in_flutter: true
+    cancel_subscriptions: true
+    close_sinks: true
+    comment_references: true
+    control_flow_in_finally: true # hard to debug
+    empty_statements: true # why doe
+    hash_and_equals: true
+    invariant_booleans: true # experimental, but catches silly errors
+    iterable_contains_unrelated_type: true # catches silly errors
+    list_remove_unrelated_type: true
+    literal_only_boolean_expressions: true # can be inferred at compile time
+    no_duplicate_case_values: true
+    no_logic_in_create_state: true
+    prefer_void_to_null: false
+    throw_in_finally: true # hard to debug
+    unnecessary_statements: true # usually redundant code
+    unrelated_type_equality_checks: true # catches silly errors
+    unsafe_html: true # find a better way
+    use_build_context_synchronously: true # experimental, but catches hard to debug errors
+    use_key_in_widget_constructors: true # and don't complain
+    valid_regexps: true # for all u regex noobs
+
+    # Style Rules
+    always_declare_return_types: true # dont be lazy
+    always_put_control_body_on_new_line: false # i like conciseness
+    always_put_required_named_parameters_first: true
+    always_specify_types: false
+    annotate_overrides: true
+    avoid_bool_literals_in_conditional_expressions: true
+    avoid_catching_errors: true # should never be necessary to catch an error at runtime - only Exception
+    avoid_classes_with_only_static_members: false # something to keep in mind, but won't enable just yet.
+    avoid_double_and_int_checks: true # use num bruh
+    avoid_equals_and_hash_code_on_mutable_classes: true # otherwise leads to unpredicatblable behaviour
+    avoid_escaping_inner_quotes: true
+    avoid_function_literals_in_foreach_calls: true # only use tearoffs.
+    avoid_implementing_value_types: true # `implements` does not enforce inheritance of ==.
+    avoid_init_to_null: true # redundant
+    avoid_js_rounded_ints: true # use `BigInt`.
+    avoid_multiple_declarations_per_line: false # conciseness
+    avoid_null_checks_in_equality_operators: true # redundant
+    avoid_positional_boolean_parameters: false # be careful with this - makes sense when they're blatantly obvious
+    avoid_private_typedef_functions: true
+    avoid_redundant_argument_values: true
+    avoid_renaming_method_parameters: false
+    avoid_return_types_on_setters: true
+    avoid_returning_null_for_void: true # return; or redundant
+    avoid_returning_this: true # prefer cascade
+    avoid_shadowing_type_parameters: true # leads to confusion
+    avoid_single_cascade_in_expression_statements: true
+    avoid_unnecessary_containers: true # avoid clutter
+    avoid_unused_constructor_parameters: true # y doe
+    avoid_void_async: true # Future<void> for brevity
+    await_only_futures: true # `await null` if an asynchronous delay is needed.
+    camel_case_extensions: true
+    camel_case_types: true
+    cascade_invocations: true
+    cast_nullable_to_non_nullable: true # if a: A? then a! as <non-nullable type>
+    constant_identifier_names: true # we should determined a letter like `k` to prefix constants.
+    curly_braces_in_flow_control_structures: true # unless it can be represented in one line.
+    directives_ordering: true # clean imports 
+    empty_catches: true # comment to explain why they're ignored.
+    empty_constructor_bodies: true # use ;
+    exhaustive_cases: true
+    file_names: true
+    flutter_style_todos: false
+    implementation_imports: true
+    join_return_with_assignment: true
+    leading_newlines_in_multiline_strings: true # easier to read.
+    library_names: true
+    library_prefixes: true
+    lines_longer_than_80_chars: false
+    missing_whitespace_between_adjacent_strings: true
+    non_constant_identifier_names: true
+    only_throw_errors: false # we can throw TuteroError
+    overridden_fields: false
+    package_prefixed_library_names: true # avoids duplicate libraries
+    parameter_assignments: true
+    prefer_adjacent_string_concatenation: true # much cleaner than +.
+    prefer_asserts_in_initializer_lists: true # follows Flutter conventions.
+    prefer_asserts_with_message: true
+    prefer_collection_literals: true
+    prefer_conditional_assignment: true
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: false
+    prefer_constructors_over_static_methods: true
+    prefer_contains: true # indexOf should not be used in place of contains.
+    prefer_expression_function_bodies: false
+    prefer_final_fields: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_for_elements_to_map_fromIterable: true
+    prefer_foreach: true
+    prefer_function_declarations_over_variables: true
+    prefer_if_null_operators: true
+    prefer_interpolation_to_compose_strings: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    prefer_is_not_operator: true
+    prefer_iterable_whereType: true
+    prefer_mixin: true
+    prefer_null_aware_method_calls: true
+    prefer_null_aware_operators: true
+    prefer_single_quotes: true
+    prefer_spread_collections: true
+    recursive_getters: true
+    require_trailing_commas: false # prefer dart_code_metrics implementation.
+    sized_box_for_whitespace: true
+    slash_for_doc_comments: true
+    sort_child_properties_last: true
+    sort_constructors_first: true
+    sort_unnamed_constructors_first: true
+    type_annotate_public_apis: false
+    unawaited_futures: false
+    unnecessary_await_in_return: true
+    unnecessary_brace_in_string_interps: true
+    unnecessary_const: true
+    unnecessary_overrides: true
+    unnecessary_parenthesis: true
+    unnecessary_raw_strings: true
+    unnecessary_string_escapes: true
+    unnecessary_string_interpolations: true
+    unnecessary_this: true
+    use_function_type_syntax_for_parameters: true
+    use_late_for_private_fields_and_variables: true
+    use_named_constants: true
+    use_raw_strings: true
+    use_rethrow_when_possible: true
+    use_setters_to_change_properties: true
+    use_string_buffers: true
+
+    # Pub Rules
+    depend_on_referenced_packages: true
+    lowercase_with_underscores: true
+    sort_pub_dependencies: false
+
+dart_code_metrics:
+  metrics:
+    - cyclomatic-complexity: 30
+    - source-lines-of-code: 60
+    - maximum-nesting-level: 4
+  rules:
+    # Common
+    - avoid-nested-conditional-expressions:
+        acceptable-level: 3
+    - binary-expression-operand-order
+    - double-literal-format
+    - member-ordering-extended:
+        order:
+          - constructors
+          - named-constructors
+          - factory-constructors
+          - public-fields
+          - private-fields
+          - getters-setters
+          - protected-methods
+          - public-methods
+          - private-methods
+          - overridden-methods
+          - static-fields
+          - static-methods
+    - no-boolean-literal-compare
+    - no-equal-then-else
+    - prefer-trailing-comma
+
+    # Flutter specific
+    - always-remove-listener
+    - avoid-returning-widgets
+    - avoid-unnecessary-setstate
+    - avoid-wrapping-in-padding
+    - prefer-const-border-radius
+    # - prefer-extracting-callbacks
+    - prefer-single-widget-per-file:
+        ignore-private-widgets: true
+        exclude:
+          - 'core/**/*.dart'
+  rules-exclude:
+    - '**/generated_plugin_registrant.dart'
+    - '**/router.gr.dart'
+    - '**/*.config.dart'
+    - '**/*.pearl_config.dart'
+    - '**/*.model.dart'
+    - '**/*.g.dart'
+    - '**/*.gen.dart'
+    - '**/*.mocks.dart'
+

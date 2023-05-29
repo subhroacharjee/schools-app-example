@@ -1,0 +1,49 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  pre-release:
+    name: Pre-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: semantic-release
+        uses: ./.github/actions/semantic-release
+        with:
+          github-token: ${{ secrets.REPO_ADMIN_TOKEN }}
+      - id: commit
+        name: Commit semantic-release changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          if git diff --exit-code &> /dev/null
+          then
+            echo "noChanges=1" >> $GITHUB_OUTPUT
+          else
+            git add .
+            git commit -m "chore: Update release metadata [skip ci]" -a
+          fi
+      - name: Push changes
+        if: steps.commit.outputs.noChanges != '1'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.REPO_ADMIN_TOKEN }}
+          branch: ${{ github.ref }}
+  release-pr:
+    name: Create release PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release PR
+        id: create-release
+        uses: ./.github/actions/release-please
+        with:
+          github-token: ${{ secrets.REPO_ADMIN_TOKEN }}

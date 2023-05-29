@@ -1,0 +1,16 @@
+dependency_overrides:
+  components:
+    path: ../../../components
+  schema:
+    path: ../../../schema
+  core_flutter:
+    path: ../../../core-flutter
+  learning_library:
+    path: ../../../learning-library
+  testing:
+    path: ../../../learning-library/features/testing
+  skill_info:
+    path: ../../../learning-library/features/skill_info
+  firebase_auth: 4.2.1
+  firebase_core: 2.4.0
+  firebase_core_web: 2.2.1

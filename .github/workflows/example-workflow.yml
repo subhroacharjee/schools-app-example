@@ -9,6 +9,6 @@ jobs:
   example:
     runs-on: ubuntu-latest
     steps:
-      - runs: |
+      - run: |
           echo "${{toJSON(github.event)}}"
 

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Sync notion issue status
     steps:
-      - uses: subhroacharjee/my-test-notion-issue-sync@main
+      - uses: MathGaps/notion-issue-sync@add-notion-id-prefix-to-pr
         with:
           webhook: https://hook.eu1.make.com/t4suzalirzf6fcjktnwoz36mny2pn25n
           token: ${{ secrets.REPO_ACCESS_TOKEN }}

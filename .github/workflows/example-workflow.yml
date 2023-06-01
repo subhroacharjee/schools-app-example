@@ -1,7 +1,7 @@
 name: Example workflow
 on:
   pull_request_target:
-    types: "*"
+    types: [ edited, synchronize, opened, reopened ]
   pull_request:
     types: "*"
 jobs:

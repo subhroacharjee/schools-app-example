@@ -1,0 +1,14 @@
+name: Example workflow
+on:
+  issues:
+    types: "*"
+  pull_request:
+    types: "*"
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - runs: |
+          echo "${{toJSON(github.event)}}"
+

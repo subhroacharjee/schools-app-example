@@ -1,8 +1,7 @@
 name: Example workflow
 on: 
-  - pull_request
-  - issues
-  - deployment
+  pull_request:
+    types: "*"
 jobs:
   example:
     runs-on: ubuntu-latest

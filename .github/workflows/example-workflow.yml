@@ -1,8 +1,9 @@
 name: Example workflow
 on:
   pull_request_target:
-    types: 
-      - synchronize
+    types: "*"
+  pull_request:
+    types: "*"
 jobs:
   example:
     runs-on: ubuntu-latest

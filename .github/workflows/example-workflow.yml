@@ -1,9 +1,5 @@
 name: Example workflow
-on:
-  pull_request_target:
-    types: [ edited, synchronize, opened, reopened ]
-  pull_request:
-    types: "*"
+on: "*"
 jobs:
   example:
     runs-on: ubuntu-latest

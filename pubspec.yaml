@@ -144,3 +144,5 @@ flutter:
 
 graphql_codegen_sanitizer:
   schema_file: package:schema/src/tutero_graph.graphql.dart
+  
+  

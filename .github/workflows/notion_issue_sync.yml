@@ -13,7 +13,7 @@ jobs:
     name: Sync notion issue status
     steps:
       - run: |
-          echo '${{github.event.pull_request.head}}'
+          echo '${{toJSON(github.event.pull_request.head)}}'
       - uses: MathGaps/notion-issue-sync@add-notion-id-prefix-to-pr
         with:
           webhook: https://hook.eu1.make.com/t4suzalirzf6fcjktnwoz36mny2pn25n

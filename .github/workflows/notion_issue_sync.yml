@@ -8,6 +8,7 @@ on:
     types: "created"
 jobs:
   sync:
+    if: startsWith(${{github.event.pull_request.head.ref}})
     runs-on: ubuntu-latest
     name: Sync notion issue status
     steps:

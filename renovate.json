@@ -5,7 +5,7 @@
   ],
   "hostRules": [
     {
-      "matchHost": "https://github.com",
+      "matchHost": "https://github.com/MathGaps",
       "hostType": "github",
       "token": "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"
     }

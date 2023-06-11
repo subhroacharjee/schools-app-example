@@ -8,5 +8,17 @@
       "matchHost": "github.com/MathGaps",
       "token": "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"
     }
+  ],
+  "packageRules": [
+    {
+      "matchSourceUrlPrefixes": [
+        "https://github.com/MathGaps"
+      ],
+      "matchUpdateTypes": [
+        "patch",
+        "minor"
+      ],
+      "groupName": "internal-dep"
+    }
   ]
 }

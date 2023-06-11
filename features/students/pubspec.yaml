@@ -51,7 +51,7 @@ dev_dependencies:
       ref: package-scopes
   graphql_codegen_sanitizer:
     git: https://github.com/MathGaps/graphql_codegen_sanitizer.git
-  injectable_generator: 1.5.4
+  injectable_generator: 1.5.5
   flutter_lints: 2.0.0
   copy_with_extension_gen: ^4.0.0
 

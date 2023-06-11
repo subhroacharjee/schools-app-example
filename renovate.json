@@ -6,7 +6,7 @@
   "hostRules": [
     {
       "matchHost": "github.com/MathGaps",
-      "token": "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"
+      "token": "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"
     }
   ],
   "packageRules": [

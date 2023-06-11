@@ -32,11 +32,11 @@ dependencies:
   core_flutter:
     git: 
       url: https://github.com/MathGaps/core-flutter.git
-      ref: v1.10.x
+      ref: v1.9.x
   components:
     git: 
       url: https://github.com/MathGaps/components.git
-  copy_with_extension: ^4.0.0
+  copy_with_ext:ension: ^4.0.0
   dartx: ^1.0.0
   equatable: ^2.0.3
   firebase_auth: 4.2.1

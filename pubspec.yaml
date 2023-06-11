@@ -47,7 +47,7 @@ dependencies:
   flutter_svg: ^1.0.0
   flutter_typeahead: 4.1.1
   go_router: 6.0.4
-  injectable: 1.5.3
+  injectable: 1.5.4
   url_launcher: ^6.1.2
   intl: ^0.17.0
   shared_preferences: ^2.0.15

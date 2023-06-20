@@ -32,7 +32,7 @@ dependencies:
       url: https://github.com/MathGaps/learning-library.git
       ref: v1.16.x
   flutter_bloc: 8.1.1
-  flutter_svg: 1.0.0
+  flutter_svg: 1.1.6
   google_fonts: 2.3.3
   dartx: ^1.0.0
   injectable: 1.5.3

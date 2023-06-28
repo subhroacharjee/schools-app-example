@@ -85,7 +85,7 @@ dev_dependencies:
   copy_with_extension_gen: ^4.0.0
   dart_code_metrics: 4.19.2
   injectable_generator: 1.5.4
-  flutter_lints: 2.0.0
+  flutter_lints: 2.0.2
   flutter_test:
     sdk: flutter
   graphql_codegen:

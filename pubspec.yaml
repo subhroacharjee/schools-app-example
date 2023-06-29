@@ -81,7 +81,7 @@ dependencies:
       ref: v1.16.x
 
 dev_dependencies:
-  build_runner: 2.3.2
+  build_runner: 2.4.6
   copy_with_extension_gen: ^4.0.0
   dart_code_metrics: 4.19.2
   injectable_generator: 1.5.4

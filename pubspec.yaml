@@ -39,7 +39,7 @@ dependencies:
   copy_with_ext:ension: ^4.0.0
   dartx: ^1.0.0
   equatable: ^2.0.3
-  firebase_auth: 4.2.1
+  firebase_auth: 4.7.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
